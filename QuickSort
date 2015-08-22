@@ -1,0 +1,46 @@
+public int[] QuickSort(int[] input){
+		QuickSortUtil(input, 0, input.length-1);
+		return input;
+}
+	
+public static void QuickSortUtil(int[] input, int begin, int end){
+	//Base case to end recursion
+	if(end<begin) return;
+	
+	//We choose 'end' element as pivot 
+	int pivotIndex = end;
+	
+	//Partition = compare each element with pivot & if greater push to the right of pivot
+	//Note pivot position shifts to left, so new pivot position is returned (Not Always!)
+	pivotIndex = Partition(input, begin, pivotIndex);
+	
+	//Recurse on rest of the array leaving pivot
+	QuickSortUtil(input, begin, pivotIndex-1);
+	QuickSortUtil(input, pivotIndex+1, end);
+}
+
+public static int Partition(int[] input, int begin, int pivotIndex){
+	int pointer = begin;
+	while(pivotIndex>pointer){
+		//If pointer element is less or equal to pivot, just increment pointer
+		if(input[pointer] <= input[pivotIndex]) pointer++;
+		//If greater, swap 2 or 3 elements & decrement pivotIndex
+		else {
+			//When pointer & pivot are neighbors - swap 2 elements
+			if(pivotIndex-pointer == 1) {
+				int temp = input[pointer];
+				input[pointer] = input[pivotIndex];
+				input[pivotIndex] = temp;
+			}
+			//When non-neighbors, do 3-element swap
+			else{
+				int temp = input[pivotIndex-1];
+				input[pivotIndex-1] = input[pivotIndex];
+				input[pivotIndex] = input[pointer];
+				input[pointer] = temp;
+			}
+			pivotIndex--;
+		}
+	}
+	return pivotIndex;
+}
