@@ -1,6 +1,6 @@
 public int[] QuickSort(int[] input){
-		QuickSortUtil(input, 0, input.length-1);
-		return input;
+	QuickSortUtil(input, 0, input.length-1);
+	return input;
 }
 	
 public static void QuickSortUtil(int[] input, int begin, int end){
