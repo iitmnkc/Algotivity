@@ -1,1 +1,1 @@
-Algorithms implemented in Java for FUN!
+Algorithms implemented in Java!
