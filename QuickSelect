@@ -1,0 +1,50 @@
+public class QuickSelect {
+	public static void main(String[] args){
+		System.out.println(QuickSelect(new int[]{5, 3, 1, 7, 9,11,2}, 4));
+	}
+	
+	//kth smallest number in array/kth order statistic/Selection algorithm
+	//Similar to QuickSort, except we recurse only on one side after Partition step
+	public static int QuickSelect(int[] input, int k){
+		return QuickSelectUtil(input,0,input.length-1,k);
+	}
+	
+	public static int QuickSelectUtil(int[] input, int begin, int end, int k){
+		//Base case for recursion
+		if(begin==end) return input[begin];
+		
+		//Partition with last element as pivot
+		int pvtIndex = Partition(input, 0, input.length-1);
+		
+	  //Return the element if it is kth smallest, else recurse on respective side
+		if(pvtIndex == k-1) return input[pvtIndex];
+		else if (pvtIndex > k-1) return QuickSelectUtil(input, begin ,pvtIndex-1, k);
+		else return QuickSelectUtil(input, pvtIndex+1, end, k);
+	}
+	
+	//Lomuto partition - popular partition scheme
+	public static int Partition(int[] input, int begin, int pivotIndex){
+		int pointer = begin;
+		while(pivotIndex>pointer){
+			//If pointer element is less or equal to pivot, just increase the pointer
+			if(input[pointer] <= input[pivotIndex]) pointer++;
+			//If greater, swap 2 or 3 elements
+			else {
+				int temp = input[pointer];
+				//When pointer & pivot are neighbors - swap 2 elements
+				if(pivotIndex-pointer == 1) {
+					input[pointer] = input[pivotIndex];
+				}
+				//When non-neighbors, we do 3-element swap
+				else{
+					input[pointer] = input[pivotIndex-1];
+					input[pivotIndex-1] = input[pivotIndex];
+				}
+				input[pivotIndex] = temp;
+				pivotIndex--;
+			}
+		}
+		return pivotIndex;
+	}
+}
+
